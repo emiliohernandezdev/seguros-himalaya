@@ -10,18 +10,12 @@ import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { AuthService } from './services/auth.service';
+import { AuthModule } from './auth/auth.module';
+import { environment } from 'src/environments/environment.prod';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideFirebaseApp(() => initializeApp({
-      apiKey: "AIzaSyAkeTxvDeZu6zKFn83OkFE7LVQQvhgnctE",
-      authDomain: "seguroshimalaya-cc45a.firebaseapp.com",
-      projectId: "seguroshimalaya-cc45a",
-      storageBucket: "seguroshimalaya-cc45a.appspot.com",
-      messagingSenderId: "963903228895",
-      appId: "1:963903228895:web:3094b5e556949af87b126a",
-      measurementId: "G-0TG72D900G"
-    })),
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth())
   ]
@@ -29,7 +23,10 @@ export const appConfig: ApplicationConfig = {
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [BrowserModule, IonicModule.forRoot({
+    mode: 'ios',
+    backButtonText: 'Atras'
+  }), AppRoutingModule, AuthModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AuthService
   ],
