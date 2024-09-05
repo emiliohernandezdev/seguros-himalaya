@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancelar</ion-button>
+    </ion-buttons>
+    <ion-title>Agregar categoria</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true" [disabled]="!addCategoryForm.valid">Guardar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="addCategoryForm">
+    <ion-item>
+      <ion-input formControlName="name" labelPlacement="stacked" label="Nombre" placeholder="Your name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-textarea formControlName="description" label="Descripción" placeholder="Type something here"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-input formControlName="color" type="color" labelPlacement="stacked" label="Color" placeholder="Your name"></ion-input>
+    </ion-item>
+  </form>
+</ion-content>

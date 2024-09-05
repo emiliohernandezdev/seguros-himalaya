@@ -3,7 +3,7 @@ import { Auth } from '@angular/fire/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
-import { EmailAuthProvider, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -15,7 +15,9 @@ export class LoginComponent  implements OnInit {
   private auth = inject(Auth);
   showPassword = false;
   loginForm: FormGroup;
-  constructor(private fb: FormBuilder, private loadingCtrl: LoadingController, private alertController: AlertController,
+  constructor(private fb: FormBuilder, 
+    private authService: AuthService,
+    private loadingCtrl: LoadingController, private alertController: AlertController,
     private router: Router
   ) { 
     this.loginForm = this.fb.group({
@@ -24,7 +26,9 @@ export class LoginComponent  implements OnInit {
     })
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authService.getUsers().subscribe(console.log)
+  }
 
 
   async byMail(){
@@ -38,6 +42,10 @@ export class LoginComponent  implements OnInit {
 
     return signInWithEmailAndPassword(this.auth, this.loginForm.controls['email'].value, this.loginForm.controls['password'].value)
     .then(async(result) => {
+      console.log(result)
+      localStorage.setItem('user', JSON.stringify(result.user));
+      this.authService.validateUser(result.user.email ?? '', result.user.displayName ?? '', 'local').subscribe(console.log)
+      this.router.navigate(['/app'])
       await loading.dismiss();
     })
     .catch(async (error) => {
@@ -81,6 +89,7 @@ export class LoginComponent  implements OnInit {
     .then(async(result) => {
       console.log(result)
       localStorage.setItem('user', JSON.stringify(result.user));
+      this.authService.validateUser(result.user.email ?? '', result.user.displayName ?? '', 'google').subscribe(console.log)
       this.router.navigate(['/app'])
       await loading.dismiss();
     })

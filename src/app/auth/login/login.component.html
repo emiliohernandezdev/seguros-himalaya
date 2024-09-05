@@ -16,10 +16,7 @@
             </ion-item>
             <ion-item>
               <ion-input formControlName="password" fill="outline" label="Contraseña" labelPlacement="floating" placeholder="**********" [type]="showPassword ? 'text' : 'password'" [clearInput]="true"></ion-input>
-              <ion-button slot="end" (click)="togglePassword()">
-                <ion-icon *ngIf="showPassword" name="eye-off-outline"></ion-icon>
-                <ion-icon *ngIf="!showPassword" name="eye-outline"></ion-icon>
-              </ion-button>
+              <ion-input-password-toggle slot="end"></ion-input-password-toggle>
             </ion-item>
           </ion-list>
   
