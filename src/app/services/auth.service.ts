@@ -1,14 +1,29 @@
-import { Injectable, inject } from '@angular/core';
-import { Auth, GoogleAuthProvider, UserCredential, signInWithPopup } from '@angular/fire/auth';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { map, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable()
 export class AuthService {
-  private auth = inject(Auth);
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-
-  byGoogle(): Promise<UserCredential> {
-    return signInWithPopup(this.auth, new GoogleAuthProvider());
+  private extractData(res: any){
+    let body = res;
+    return body || { };
   }
-  
+
+  public getUsers() {
+    return this.http.get('https://jsonplaceholder.typicode.com/users')
+    .pipe(map(this.extractData));
+  }
+
+
+  public validateUser(email: string, displayName: string, authProvider?: string): Observable<any> {
+    return this.http.post(`${environment.apiUrl}auth/validate`, {
+      email: email,
+      displayName: displayName,
+      authProvider: authProvider
+    })
+    .pipe(map(this.extractData));
+  }
 }

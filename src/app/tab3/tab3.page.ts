@@ -6,7 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
-
-  constructor() {}
+  public user:any = null;
+  constructor() {
+    this.user = JSON.parse(localStorage.getItem('user') || '{}');
+  }
 
 }
