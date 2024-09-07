@@ -20,8 +20,13 @@ export class CategoryService {
     .pipe(map(this.extractData));
   }
 
-  public addCategory(category: CategoryModel): Observable<any> {
+  public addCategory(category: any): Observable<any> {
     return this.http.post(`${environment.apiUrl}category/add`, category)
+    .pipe(map(this.extractData))
+  }
+
+  public deleteCategory(uuid: string): Observable<any>{
+    return this.http.delete(`${environment.apiUrl}category/delete/${uuid}`, {})
     .pipe(map(this.extractData))
   }
 
