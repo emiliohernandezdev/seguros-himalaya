@@ -1,0 +1,65 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Usuarios
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Hale hacia abajo para actualizar"
+      refreshingSpinner="circles"
+      refreshingText="Cargando..."
+    >
+    </ion-refresher-content>
+  </ion-refresher> -->
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Usuarios</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- <ion-searchbar animated="true" placeholder="Ingrese su busqueda" (ionCancel)="cancel()" (ionChange)="search($event)"></ion-searchbar> -->
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let user of users">
+      <ion-item detail="true">
+        <ion-label>
+          <h2>{{user.displayName}}</h2>
+          <p>{{user.email}}</p>
+        </ion-label>
+        <ion-note slot="end">
+          <ion-chip *ngIf="user.role.name == 'admin'" color="primary">{{user.role.label}}</ion-chip>
+          <ion-chip *ngIf="user.role.name == 'user'" color="secondary">{{user.role.label}}</ion-chip>
+        </ion-note>
+      </ion-item>
+  
+      <ion-item-options>
+        <ion-item-option>
+          <ion-icon slot="end" name="id-card-outline"></ion-icon>
+          Cambiar rol
+        </ion-item-option>
+        <ion-item-option color="danger">
+          <ion-icon slot="end" name="person-remove-outline"></ion-icon>
+          Dar de baja
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="addModal()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  
+
+
+</ion-content>

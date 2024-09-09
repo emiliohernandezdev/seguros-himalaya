@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium">Cancelar</ion-button>
+    </ion-buttons>
+    <ion-title>Agregar usuario</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [strong]="true">Guardar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="addUserForm">
+    <ion-item>
+      <ion-input formControlName="displayName" labelPlacement="stacked" label="Nombre completo" placeholder="Ejemplo: Seguros de vida"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input formControlName="email" labelPlacement="stacked" label="Correo electronico" placeholder="Ejemplo: Seguros de vida"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-select label="Rol de usuario" label-placement="floating" interface="popover">
+        <ion-select-option *ngFor="let role of roles" [value]="role.uuid">{{role.label}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-select label="Proveedor de autenticacion" label-placement="floating" interface="popover">
+        <ion-select-option value="google">Google OAuth 2.0</ion-select-option>
+        <ion-select-option value="local">Local (email y clave)</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </form>
+</ion-content>

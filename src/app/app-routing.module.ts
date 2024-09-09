@@ -15,8 +15,32 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
+    path: 'application',
+    loadChildren: () => import('./application/application.module').then(m => m.ApplicationModule)
+  },
+  {
     path: 'category',
     loadChildren: () => import('./category/category.module').then(m => m.CategoryModule)
+  },
+  {
+    path: 'users',
+    loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
+  },
+  {
+    path: 'products',
+    loadChildren: () => import('./products/products.module').then(m => m.ProductsModule)
+  },
+  {
+    path: 'clients',
+    loadChildren: () => import('./clients/clients.module').then(m => m.ClientsModule)
+  },
+  {
+    path: 'providers',
+    loadChildren: () => import('./providers/providers.module').then(m => m.ProvidersModule)
+  },
+  {
+    path: 'reports',
+    loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule)
   }
 ];
 @NgModule({

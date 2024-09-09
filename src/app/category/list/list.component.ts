@@ -65,16 +65,17 @@ export class ListComponent implements OnInit {
   }
 
   public async search($event: any) {
+    $event.preventDefault();
     const loading = await this.loadingCtrl.create({
       message: 'Buscando...'
     });
 
     await loading.present();
 
-    $event.preventDefault();
+    
 
     this.categories = this.categories.filter((e) => e.name.toLowerCase().includes($event.target.value.toLowerCase()))
-    await loading.dismiss()
+    await loading.dismiss();
   }
 
   public async delete(category: any) {

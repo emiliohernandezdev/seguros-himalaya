@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ListComponent } from './list/list.component';
 
 const routes: Routes = [
   {
-    path: 'user',
-    loadChildren: () => import('./usertabs/usertabs.module').then(m => m.UsertabsModule)
+    path: 'list',
+    component: ListComponent
   }
 ];
 
@@ -12,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ApplicationRoutingModule { }
+export class UsersRoutingModule { }

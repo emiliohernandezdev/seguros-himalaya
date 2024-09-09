@@ -27,7 +27,17 @@ export class LoginComponent  implements OnInit {
   }
 
   ngOnInit() {
-    this.authService.getUsers().subscribe(console.log)
+  }
+
+  async doLogin(method: string){
+    switch(method){
+      case 'mail':
+        await this.byMail();
+        break;
+      case 'google':
+        await this.byGoogle();
+        break;
+    }
   }
 
 
@@ -42,10 +52,35 @@ export class LoginComponent  implements OnInit {
 
     return signInWithEmailAndPassword(this.auth, this.loginForm.controls['email'].value, this.loginForm.controls['password'].value)
     .then(async(result) => {
-      console.log(result)
       localStorage.setItem('user', JSON.stringify(result.user));
-      this.authService.validateUser(result.user.email ?? '', result.user.displayName ?? '', 'local').subscribe(console.log)
-      this.router.navigate(['/app'])
+      this.authService.validateUser(result.user.email ?? '', result.user.displayName ?? '', 'local')
+      .subscribe(async(e) => {
+        const authAlert = await this.alertController.create({
+          header: 'Ocurrio un error',
+          subHeader: 'Esto no deberia pasar.',
+          message: 'Vuelva a intentarlo mas tarde',
+          buttons: ['Cerrar'],
+        });
+        if(e.success == true){
+          console.log(e.user.role)
+          switch(e.user.role.name){
+            case 'admin':
+              this.router.navigate(['/app'])
+            break;
+
+            case 'user':
+              this.router.navigate(['/application/user/menu'])
+            break;
+          }
+        }else{
+          authAlert.header = 'Error de autenticacion';
+          authAlert.subHeader = 'Verifique sus credenciales'
+          authAlert.message = 'Y vuelva a intentarlo mas tarde.'
+
+          await authAlert.present();
+        }
+      })
+      
       await loading.dismiss();
     })
     .catch(async (error) => {
@@ -87,10 +122,35 @@ export class LoginComponent  implements OnInit {
 
     return signInWithPopup(this.auth, new GoogleAuthProvider())
     .then(async(result) => {
-      console.log(result)
       localStorage.setItem('user', JSON.stringify(result.user));
-      this.authService.validateUser(result.user.email ?? '', result.user.displayName ?? '', 'google').subscribe(console.log)
-      this.router.navigate(['/app'])
+      this.authService.validateUser(result.user.email ?? '', result.user.displayName ?? '', 'google')
+      .subscribe(async(e) => {
+        const authAlert = await this.alertController.create({
+          header: 'Ocurrio un error',
+          subHeader: 'Esto no deberia pasar.',
+          message: 'Vuelva a intentarlo mas tarde',
+          buttons: ['Cerrar'],
+        });
+        if(e.success == true){
+          console.log(e.user.role)
+          switch(e.user.role.name){
+            case 'admin':
+              this.router.navigate(['/app'])
+            break;
+
+            case 'user':
+              this.router.navigate(['/application/user/menu'])
+            break;
+
+          }
+        }else{
+          authAlert.header = 'Error de autenticacion';
+          authAlert.subHeader = 'Verifique sus credenciales'
+          authAlert.message = 'Y vuelva a intentarlo mas tarde.'
+          
+          await authAlert.present();
+        }
+      })
       await loading.dismiss();
     })
     .catch(async (error) => {
