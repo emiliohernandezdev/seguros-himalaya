@@ -2,8 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController } from '@ionic/angular';
-import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
+import { GoogleAuthProvider, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -18,7 +18,8 @@ export class LoginComponent  implements OnInit {
   constructor(private fb: FormBuilder, 
     private authService: AuthService,
     private loadingCtrl: LoadingController, private alertController: AlertController,
-    private router: Router
+    private router: Router,
+    private toast: ToastController
   ) { 
     this.loginForm = this.fb.group({
       email: ['', Validators.compose([Validators.required, Validators.email])],
@@ -62,7 +63,14 @@ export class LoginComponent  implements OnInit {
           buttons: ['Cerrar'],
         });
         if(e.success == true){
-          console.log(e.user.role)
+          const toast = await this.toast.create({
+            message: 'Sesion iniciada con exito',
+            duration: 2500,
+            position: 'bottom',
+            icon: 'checkmark-circle-outline'
+          });
+      
+          await toast.present();
           switch(e.user.role.name){
             case 'admin':
               this.router.navigate(['/app'])
@@ -72,6 +80,8 @@ export class LoginComponent  implements OnInit {
               this.router.navigate(['/application/user/menu'])
             break;
           }
+          await toast.present()
+          localStorage.setItem('himalayaToken', e.token);
         }else{
           authAlert.header = 'Error de autenticacion';
           authAlert.subHeader = 'Verifique sus credenciales'
@@ -132,7 +142,12 @@ export class LoginComponent  implements OnInit {
           buttons: ['Cerrar'],
         });
         if(e.success == true){
-          console.log(e.user.role)
+          const toast = await this.toast.create({
+            message: 'Sesion iniciada con exito',
+            duration: 2500,
+            position: 'bottom',
+            icon: 'checkmark-circle-outline'
+          });
           switch(e.user.role.name){
             case 'admin':
               this.router.navigate(['/app'])
@@ -143,6 +158,8 @@ export class LoginComponent  implements OnInit {
             break;
 
           }
+          await toast.present()
+          localStorage.setItem('himalayaToken', e.token);
         }else{
           authAlert.header = 'Error de autenticacion';
           authAlert.subHeader = 'Verifique sus credenciales'
@@ -168,5 +185,30 @@ export class LoginComponent  implements OnInit {
 
   public togglePassword(){
     this.showPassword = !this.showPassword;
+  }
+
+  public forgotPassword(){
+    return sendPasswordResetEmail(this.auth, this.loginForm.controls['email'].value)
+    .then((e) => {
+
+    })
+    .catch(async(error) => { 
+      const alert = await this.alertController.create({
+        header: error,
+        subHeader: 'Esto no deberia pasar.',
+        message: 'Vuelva a intentarlo mas tarde',
+        buttons: ['Cerrar'],
+      });
+      switch(error.code){
+        case 'auth/missing-email':
+          alert.header = 'Sin correo electronico';
+          alert.subHeader = 'No ha ingresado su correo electronico'
+          alert.message = 'Ingreselo por favor, y vuelva a intentarlo.'
+          break;
+      }
+      
+  
+      await alert.present();
+    })
   }
 }

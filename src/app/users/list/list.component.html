@@ -29,7 +29,9 @@
 
   <ion-list>
     <ion-item-sliding *ngFor="let user of users">
-      <ion-item detail="true">
+      <ion-item button="true">
+        <ion-icon *ngIf="user.authProvider == 'google'" color="danger" slot="start" name="logo-google" size="large"></ion-icon>
+        <ion-icon *ngIf="user.authProvider == 'local'" color="secondary" slot="start" name="mail-outline" size="large"></ion-icon>
         <ion-label>
           <h2>{{user.displayName}}</h2>
           <p>{{user.email}}</p>

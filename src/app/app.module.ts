@@ -12,6 +12,8 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { AuthService } from './services/auth.service';
 import { AuthModule } from './auth/auth.module';
 import { environment } from 'src/environments/environment.prod';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpReqInterceptor } from './interceptors/HttpReq.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -28,7 +30,12 @@ export const appConfig: ApplicationConfig = {
     backButtonText: 'Atras'
   }), AppRoutingModule, AuthModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    AuthService
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpReqInterceptor,
+      multi: true
+    },
   ],
   bootstrap: [AppComponent],
 })

@@ -14,8 +14,10 @@
               <ion-input formControlName="email" fill="outline" label="Correo electrónico" labelPlacement="floating" placeholder="example@example.com" [clearInput]="true"></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input formControlName="password" fill="outline" label="Contraseña" labelPlacement="floating" placeholder="**********" [type]="showPassword ? 'text' : 'password'" [clearInput]="true"></ion-input>
-              <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+              <ion-input formControlName="password" fill="outline" label="Contraseña" labelPlacement="floating" placeholder="**********" [type]="showPassword ? 'text' : 'password'" [clearInput]="true">
+                <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+              </ion-input>
+              
             </ion-item>
           </ion-list>
   
@@ -36,7 +38,7 @@
           Acceder con Facebook
         </ion-button> -->
 
-        <ion-button expand="block" fill="clear" color="medium">
+        <ion-button expand="block" fill="clear" color="medium" (click)="forgotPassword()">
           Olvidó su contraseña?
         </ion-button>
       </ion-card-content>
