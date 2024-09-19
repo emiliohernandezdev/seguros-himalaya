@@ -4,7 +4,7 @@ import { UserService } from 'src/app/services/user.service';
 import { AddComponent } from '../add/add.component';
 
 @Component({
-  selector: 'app-list',
+  selector: 'app-list-user',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
@@ -48,6 +48,41 @@ export class ListComponent  implements OnInit {
     if (role == 'confirm') {
       
     }
+  }
+
+
+  handleRefresh(event: any) {
+    this.users = [];
+    this.getUsers()
+      .then(() => {
+        event.target.complete();
+      })
+  }
+
+  public async cancel() {
+    this.getUsers()
+  }
+
+
+  public async search($event: any) {
+    $event.preventDefault();
+    
+    const loading = await this.loadingCtrl.create({
+      message: 'Buscando...'
+    });
+  
+    await loading.present();
+  
+    const searchTerm = $event.target.value.toLowerCase();
+  
+    this.users = this.users.filter((user) => {
+      return (
+        user.displayName.toLowerCase().includes(searchTerm) ||
+        user.email.toLowerCase().includes(searchTerm)
+      );
+    });
+  
+    await loading.dismiss();
   }
 
 

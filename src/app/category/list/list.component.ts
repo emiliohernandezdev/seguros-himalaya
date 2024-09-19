@@ -4,7 +4,7 @@ import { CategoryService } from 'src/app/services/category.service';
 import { AddComponent } from '../add/add.component';
 
 @Component({
-  selector: 'app-list',
+  selector: 'app-list-category',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })

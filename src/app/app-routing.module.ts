@@ -62,6 +62,12 @@ const routes: Routes = [
     loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule),
     canActivate: [AuthGuard],
     data: { authGuardPipe:redirectUnauthorizedToLogin }
+  },
+  {
+    path: 'requests',
+    loadChildren: () => import('./requests/requests.module').then(m => m.RequestsModule),
+    canActivate: [AuthGuard],
+    data: { authGuardPipe:redirectUnauthorizedToLogin }
   }
 ];
 

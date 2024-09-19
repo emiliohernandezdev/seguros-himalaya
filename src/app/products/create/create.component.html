@@ -1,0 +1,62 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Crear producto
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Crear producto</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <form [formGroup]="createProductForm">
+    <ion-list>
+      <ion-item>
+        <ion-input formControlName="name" label="Nombre" placeholder="Seguro de auto"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-textarea formControlName="description" label="Descripcion" [autoGrow]="true" placeholder="Descripcion del producto..."></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-input formControlName="price" type="number" label="Precio" placeholder="GTQ 150.00"></ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-toggle formControlName="isAvailable" [checked]="true">Disponible</ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-select formControlName="category" label="Categoria" aria-label="category" placeholder="Seleccionar categoria">
+          <ion-select-option *ngFor="let category of categories" [value]="category">{{category.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-select formControlName="provider" label="Proveedor" aria-label="category" interface="alert" placeholder="Seleccionar proveedor">
+          <ion-select-option *ngFor="let provider of providers" [value]="provider">{{provider.name}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+    </ion-list>
+  </form>
+  
+
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button [disabled]="!createProductForm.valid" (click)="saveProduct()">
+      <ion-icon name="save-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+
+</ion-content>

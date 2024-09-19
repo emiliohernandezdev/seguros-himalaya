@@ -12,12 +12,6 @@ export class AuthService {
     return body || { };
   }
 
-  public getUsers() {
-    return this.http.get('https://jsonplaceholder.typicode.com/users')
-    .pipe(map(this.extractData));
-  }
-
-
   public validateUser(email: string, displayName: string, authProvider?: string): Observable<any> {
     return this.http.post(`${environment.apiUrl}auth/validate`, {
       email: email,

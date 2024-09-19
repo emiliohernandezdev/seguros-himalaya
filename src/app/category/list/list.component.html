@@ -25,7 +25,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-searchbar animated="true" placeholder="Ingrese su busqueda" (ionCancel)="cancel()" (ionChange)="search($event)"></ion-searchbar>
+  <ion-searchbar animated="true" placeholder="Buscar categorias" (ionCancel)="cancel()" (ionChange)="search($event)"></ion-searchbar>
 
   <ion-list>
     <ion-item-sliding *ngFor="let category of categories">

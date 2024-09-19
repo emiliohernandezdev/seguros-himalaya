@@ -41,22 +41,7 @@
             <ion-icon name="cube-outline" size="large"></ion-icon>
           </ion-card-header>
           <ion-card-content>
-            <ion-button expand="block" color="light" routerLink="/mantenimiento-productos">
-              Ir a Mantenimiento
-            </ion-button>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-
-      <!-- Mantenimiento de Pedidos -->
-      <ion-col size="6" size-sm="12" size-md="4">
-        <ion-card class="card-maintenance" color="success">
-          <ion-card-header>
-            <ion-card-title>Pedidos</ion-card-title>
-            <ion-icon name="receipt-outline" size="large"></ion-icon>
-          </ion-card-header>
-          <ion-card-content>
-            <ion-button expand="block" color="light" routerLink="/mantenimiento-pedidos">
+            <ion-button expand="block" color="light" routerLink="/products/">
               Ir a Mantenimiento
             </ion-button>
           </ion-card-content>
@@ -78,21 +63,21 @@
         </ion-card>
       </ion-col>
 
-      <!-- Reportes -->
       <ion-col size="6" size-sm="12" size-md="4">
-        <ion-card class="card-maintenance" color="danger">
+        <ion-card class="card-maintenance" color="medium">
           <ion-card-header>
-            <ion-card-title>Reportes</ion-card-title>
-            <ion-icon name="analytics-outline" size="large"></ion-icon>
+            <ion-card-title>Solicitudes</ion-card-title>
+            <ion-icon name="document-text-outline" size="large"></ion-icon>
           </ion-card-header>
           <ion-card-content>
-            <ion-button expand="block" color="light" routerLink="/reportes">
-              Ver Reportes
+            <ion-button expand="block" color="light" [routerLink]="['/requests/']">
+              Ir a Mantenimiento
             </ion-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
 
+    
       <!-- Mantenimiento de Clientes -->
       <ion-col size="6" size-sm="12" size-md="4">
         <ion-card class="card-maintenance" color="primary">
@@ -101,7 +86,7 @@
             <ion-icon name="people-outline" size="large"></ion-icon>
           </ion-card-header>
           <ion-card-content>
-            <ion-button expand="block" color="light" routerLink="/mantenimiento-clientes">
+            <ion-button expand="block" color="light" routerLink="/clients">
               Ir a Mantenimiento
             </ion-button>
           </ion-card-content>
@@ -116,12 +101,13 @@
             <ion-icon name="storefront-outline" size="large"></ion-icon>
           </ion-card-header>
           <ion-card-content>
-            <ion-button expand="block" color="light" routerLink="/mantenimiento-proveedores">
+            <ion-button expand="block" color="light" routerLink="/providers">
               Ir a Mantenimiento
             </ion-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
+
     </ion-row>
   </ion-grid>
 </ion-content>
