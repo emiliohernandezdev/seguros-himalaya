@@ -171,11 +171,12 @@ export class LoginComponent  implements OnInit {
       await loading.dismiss();
     })
     .catch(async (error) => {
+      console.log(error)
       await loading.dismiss();
       const alert = await this.alertController.create({
         header: 'Ocurrio un error',
         subHeader: 'Esto no deberia pasar.',
-        message: 'Vuelva a intentarlo mas tarde',
+        message: 'Detalles: ' + error.message,
         buttons: ['Cerrar'],
       });
   

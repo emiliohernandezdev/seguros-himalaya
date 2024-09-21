@@ -10,6 +10,7 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ListComponent  implements OnInit {
   public products: any[] = [];
+  mostrarFiltros: boolean = false;
   constructor(private router: Router, private productService: ProductService,
     private loadingCtrl: LoadingController
   ) { }

@@ -18,6 +18,11 @@ export class ProductService {
     .pipe(map(this.extractData));
   }
 
+  public getProduct(uuid: string): Observable<any> {
+    return this.http.get(`${environment.apiUrl}product/${uuid}`)
+    .pipe(map(this.extractData));
+  }
+
   public addProduct(form: any): Observable<any> {
     return this.http.post(`${environment.apiUrl}product/add`, form)
     .pipe(map(this.extractData));

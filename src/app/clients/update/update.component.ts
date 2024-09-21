@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { LoadingController, NavController, ToastController } from '@ionic/angular';
+import { LoadingController, NavController, ToastController, ViewWillLeave } from '@ionic/angular';
 import { MaskitoOptions, MaskitoElementPredicate, maskitoTransform } from '@maskito/core';
 import { ClientService } from 'src/app/services/client.service';
 @Component({
@@ -9,7 +9,7 @@ import { ClientService } from 'src/app/services/client.service';
   templateUrl: './update.component.html',
   styleUrls: ['./update.component.scss'],
 })
-export class UpdateComponent  implements OnInit {
+export class UpdateComponent  implements OnInit, ViewWillLeave {
   public clientUuid: string = '';
   public clientInfo: any = null;
   public updateForm: FormGroup;
@@ -39,6 +39,10 @@ export class UpdateComponent  implements OnInit {
    }
 
   ngOnInit() {}
+
+  ionViewWillLeave(){
+    alert("Se perderan los cambios")
+  }
 
   readonly phoneMask: MaskitoOptions = {
     mask: ['+', '5', '0', '2', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],

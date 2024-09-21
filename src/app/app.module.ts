@@ -14,7 +14,7 @@ import { AuthModule } from './auth/auth.module';
 import { environment } from 'src/environments/environment.prod';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpReqInterceptor } from './interceptors/HttpReq.interceptor';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
@@ -27,8 +27,8 @@ export const appConfig: ApplicationConfig = {
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot({
     mode: 'ios',
-    backButtonText: 'Atras'
-  }), AppRoutingModule, AuthModule],
+    backButtonText: 'Atrás'
+  }), AppRoutingModule, AuthModule, BrowserAnimationsModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AuthService,
     {

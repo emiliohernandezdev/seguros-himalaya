@@ -9,12 +9,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ProductService } from '../services/product.service';
 import { CategoryService } from '../services/category.service';
 import { ProviderService } from '../services/provider.service';
+import { DetailComponent } from './detail/detail.component';
 
 
 @NgModule({
   declarations: [
     ListComponent,
-    CreateComponent
+    CreateComponent,
+    DetailComponent
   ],
   imports: [
     IonicModule,
