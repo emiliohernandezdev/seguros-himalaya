@@ -30,13 +30,7 @@
 
   <ion-list>
     <ion-item-sliding *ngFor="let provider of providers">
-      <ion-item-options side="start">
-        <ion-item-option color="tertiary" [href]="provider.url" target="_blank">
-          <ion-icon slot="top" name="globe"></ion-icon>
-          Visitar web
-        </ion-item-option>
-      </ion-item-options>
-      <ion-item detail="true">
+      <ion-item (click)="providerOptions(provider)">
         <ion-thumbnail slot="start">
           <img [src]="provider.logo" />
         </ion-thumbnail>
@@ -50,17 +44,6 @@
           <ion-chip *ngIf="client.type == 'other'" color="tertiary">Otro</ion-chip>
         </ion-note> -->
       </ion-item>
-  
-      <ion-item-options side="end">
-        <ion-item-option>
-          <ion-icon slot="top" name="pencil"></ion-icon>
-          Editar
-        </ion-item-option>
-        <ion-item-option color="danger">
-          <ion-icon slot="top" name="trash"></ion-icon>
-          Eliminar
-        </ion-item-option>
-      </ion-item-options>
     </ion-item-sliding>
   </ion-list>
   

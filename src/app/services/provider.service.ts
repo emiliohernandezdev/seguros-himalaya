@@ -22,4 +22,16 @@ export class ProviderService {
     return this.http.post(`${environment.apiUrl}provider/add`, form)
     .pipe(map(this.extractData));
   }
+
+  public updateProvider(uuid: string, form: any): Observable<any> {
+    return this.http.patch(`${environment.apiUrl}provider/update`, {uuid: uuid, ...form})
+    .pipe(map(this.extractData));
+  }
+
+
+  public deleteProvider(uuid: string): Observable<any> {
+    return this.http.delete(`${environment.apiUrl}provider/delete/${uuid}`)
+    .pipe(map(this.extractData));
+  }
+
 }

@@ -41,7 +41,7 @@ export class UpdateComponent  implements OnInit, ViewWillLeave {
   ngOnInit() {}
 
   ionViewWillLeave(){
-    alert("Se perderan los cambios")
+    
   }
 
   readonly phoneMask: MaskitoOptions = {
