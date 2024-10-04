@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { RequestService } from 'src/app/services/request.service';
 
 @Component({
@@ -10,7 +10,9 @@ import { RequestService } from 'src/app/services/request.service';
 export class ListComponent  implements OnInit {
 
   public requests: any[] = [];
-  constructor(private requestService: RequestService, private loadingCtrl: LoadingController) { }
+  constructor(private requestService: RequestService, private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController
+  ) { }
 
   ngOnInit() {
     this.getRequests();
@@ -29,6 +31,65 @@ export class ListComponent  implements OnInit {
         loading.dismiss();
       }
     });
+  }
+
+  public states: any[] = [
+    {
+      label: 'Enviada',
+      value: 'sended'
+    },
+    {
+      label: 'En progreso',
+      value: 'inprogress'
+    },
+    {
+      label: 'Aprobada',
+      value: 'approved'
+    },
+    {
+      label: 'Rechazada',
+      value: 'rejected'
+    }
+  ];
+  public async changeState(request: any){
+    const alert = await this.alertCtrl.create({
+      header: 'Cambio de estado de solicitud',
+      subHeader: 'Seleccione un nuevo estado',
+      inputs: this.states.map((state) => {
+        return {
+          name: state.value,
+          type: 'radio',
+          label: state.label,
+          value: state.value,
+          checked: state.value == request.state
+        }
+      }),
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Aceptar',
+          handler: async () => {
+            const loading = await this.loadingCtrl.create({
+              message: 'Cambiando estado...'
+            });
+            await loading.present();
+            // this.requestService.changeState(request.uuid, request.state.uuid).subscribe((res: any) => {
+            //   if(res.success == true){
+            //     loading.dismiss();
+            //     this.getRequests();
+            //   }else{
+            //     loading.dismiss();
+            //   }
+            // });
+          }
+        }
+      ],
+    });
+
+    await alert.present();
   }
 
 }

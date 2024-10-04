@@ -70,7 +70,7 @@
 
                 <ion-item>
                   <ion-icon slot="start" name="happy-outline"></ion-icon>
-                  <ion-textarea formControlName="comments" label="Comentarios adicionales" placeholder="Ej: el carro es nuevo"></ion-textarea>
+                  <ion-textarea formControlName="comments" label="Comentarios adicionales" placeholder="Ej: me urge la cotización"></ion-textarea>
                 </ion-item>
 
                 <ion-button fill="outline" [disabled]="!clientForm.valid" expand="full" (click)="sendClientQuotation()">
@@ -104,8 +104,13 @@
 
                 <ion-item>
                   <ion-icon slot="start" name="happy-outline"></ion-icon>
-                  <ion-textarea formControlName="comments" label="Comentarios adicionales" placeholder="Ej: el carro es nuevo"></ion-textarea>
+                  <ion-textarea formControlName="comments" label="Comentarios adicionales" placeholder="Ej: la casa es nueva"></ion-textarea>
                 </ion-item>
+
+                <ion-button fill="outline" [disabled]="!houseForm.valid" expand="full" (click)="sendHouseQuotation()">
+                  <ion-icon slot="start" name="send"></ion-icon>
+                  Enviar solicitud
+                </ion-button>
               </form>
             </div>
 
@@ -152,6 +157,11 @@
                 </ion-item>
                 <br/>
                 <ion-text color="danger">Nota: las polizas de autos deben ser aprobadas con una inspeccion al mismo (presencial)</ion-text>
+                <br/>
+                <ion-button fill="outline" [disabled]="!carForm.valid" expand="full" (click)="sendCarQuotation()">
+                  <ion-icon slot="start" name="send"></ion-icon>
+                  Enviar solicitud
+                </ion-button>
               </form>
             </div>
 

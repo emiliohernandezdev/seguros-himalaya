@@ -91,22 +91,99 @@ export class QuotationComponent  implements OnInit {
 
   public async sendClientQuotation(){
     this.quotation.value = this.clientForm.value;
-    console.log(this.quotation)
+
+    const loading = await this.loadingCtrl.create({
+      message: 'Enviando solicitud...',
+    });
+
+    loading.present();
+    
+    const toast = await this.toastCtrl.create({
+      duration: 3500,
+      position: 'bottom',
+    });
 
     this.requestService.addRequest(this.quotation.product, this.quotation.value)
-    .subscribe((e) => {
-      console.log(e)
+    .subscribe(async (e) => {
+      if(e.success == true){
+        await loading.dismiss()
+        this.nav.pop();
+        toast.message  = e.message ?? 'Solicitud enviada';
+        toast.icon = 'checkmark-circle-outline';
+        toast.color = 'success';
+        await toast.present();
+      }else{
+        await loading.dismiss()
+        toast.message  = e.message ?? 'Error al enviar la solicitud';
+        toast.icon = 'alert-circle-outline';
+        toast.color = 'danger';
+        await toast.present();
+      }
     })
   }
 
   public async sendHouseQuotation(){
     this.quotation.value = this.houseForm.value;
-    console.log(this.quotation)
+    const loading = await this.loadingCtrl.create({
+      message: 'Enviando solicitud...',
+    });
+
+    loading.present();
+    
+    const toast = await this.toastCtrl.create({
+      duration: 3500,
+      position: 'bottom',
+    });
+
+    this.requestService.addRequest(this.quotation.product, this.quotation.value)
+    .subscribe(async (e) => {
+      if(e.success == true){
+        await loading.dismiss()
+        this.nav.pop();
+        toast.message  = e.message ?? 'Solicitud enviada';
+        toast.icon = 'checkmark-circle-outline';
+        toast.color = 'success';
+        await toast.present();
+      }else{
+        await loading.dismiss()
+        toast.message  = e.message ?? 'Error al enviar la solicitud';
+        toast.icon = 'alert-circle-outline';
+        toast.color = 'danger';
+        await toast.present();
+      }
+    })
   }
 
   public async sendCarQuotation(){
     this.quotation.value = this.carForm.value;
-    console.log(this.quotation)
+    const loading = await this.loadingCtrl.create({
+      message: 'Enviando solicitud...',
+    });
+
+    loading.present();
+    
+    const toast = await this.toastCtrl.create({
+      duration: 3500,
+      position: 'bottom',
+    });
+
+    this.requestService.addRequest(this.quotation.product, this.quotation.value)
+    .subscribe(async (e) => {
+      if(e.success == true){
+        await loading.dismiss()
+        this.nav.pop();
+        toast.message  = e.message ?? 'Solicitud enviada';
+        toast.icon = 'checkmark-circle-outline';
+        toast.color = 'success';
+        await toast.present();
+      }else{
+        await loading.dismiss()
+        toast.message  = e.message ?? 'Error al enviar la solicitud';
+        toast.icon = 'alert-circle-outline';
+        toast.color = 'danger';
+        await toast.present();
+      }
+    })
   }
 
 }

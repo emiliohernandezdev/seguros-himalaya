@@ -3,6 +3,7 @@ import { AlertController, LoadingController, ModalController, ToastController } 
 import { UserService } from 'src/app/services/user.service';
 import { AddComponent } from '../add/add.component';
 import { RoleService } from 'src/app/services/role.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-user',
@@ -17,7 +18,8 @@ export class ListComponent  implements OnInit {
     private loadingCtrl: LoadingController,
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -57,15 +59,7 @@ export class ListComponent  implements OnInit {
   }
 
   public async addModal() {
-    const modal = await this.modalCtrl.create({
-      component: AddComponent,
-    });
-    modal.present();
-
-    const { data, role } = await modal.onWillDismiss();
-    if (role == 'confirm') {
-      
-    }
+    this.router.navigate(['/users/add'])
   }
 
 

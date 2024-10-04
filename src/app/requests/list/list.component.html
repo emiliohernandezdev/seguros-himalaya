@@ -35,9 +35,68 @@
     </ion-card-header>
   
     <ion-card-content>
-      Here's a small text description for the card content. Nothing more, nothing less.
+      No hay solicitudes registradas en el sistema.
     </ion-card-content>
   </ion-card>
+
+  <ion-list *ngIf="requests && requests.length > 0">
+    <ion-item-group>
+      <ion-item-divider sticky>
+        <ion-label>Filtros</ion-label>
+      </ion-item-divider>
+
+      <ion-item>
+        <ion-select label="Usuario" placeholder="Seleccione usuario" okText="Aceptar" cancelText="Cancelar">
+          <ion-select-option value="apple">Apple</ion-select-option>
+          <ion-select-option value="banana">Banana</ion-select-option>
+          <ion-select-option value="orange">Orange</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-select label="Estado" placeholder="Seleccione un estado" okText="Aceptar" cancelText="Cancelar">
+          <ion-select-option *ngFor="let state of states" [value]="state">{{state.label}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-item-group>
+
+    <ion-item-group>
+      <ion-item-divider sticky>
+        <ion-label>Resultados:</ion-label>
+      </ion-item-divider>
+    </ion-item-group>
+    <ion-item-sliding *ngFor="let request of requests">
+      <ion-item detail="true" [routerLink]="['/requests/detail/', request.uuid]">
+        <ion-label>
+          <h2><b>Nombre: </b>{{request.name}}</h2>
+          <p><b>Descripcion: </b>{{request.description}}</p>
+          <ion-item>
+            <ion-avatar aria-hidden="true" slot="start">
+              <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+            </ion-avatar>
+            <ion-label>Usuario: {{request.user.email}}</ion-label>
+          </ion-item>
+        </ion-label>
+
+        <ion-note slot="end">
+          <ion-chip *ngIf="request.state == 'sended'" color="tertiary">Enviada</ion-chip>
+          <ion-chip *ngIf="request.state == 'inprogress'" color="primary">En proceso</ion-chip>
+          <ion-chip *ngIf="request.state == 'approved'" color="success">Aprobada</ion-chip>
+          <ion-chip *ngIf="request.state == 'rejected'" color="danger">Rechazada</ion-chip>
+        </ion-note>
+      </ion-item>
+  
+      <ion-item-options side="end">
+        <ion-item-option color="primary">
+          <ion-icon slot="top" name="eye"></ion-icon>
+          Revisar
+        </ion-item-option>
+        <ion-item-option color="secondary" (click)="changeState(request)">
+          <ion-icon slot="top" name="git-pull-request"></ion-icon>
+          Cambiar estado
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 
   <!-- <ion-list>
     <ion-item-sliding *ngFor="let provider of providers">

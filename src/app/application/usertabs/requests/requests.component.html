@@ -34,6 +34,7 @@
         <p class="ion-text-nowrap"><b>Ult. actualización:</b> {{request.updatedAt | date : "dd-MM-YYYY hh:mm"}}</p>
       </ion-label>
       <ion-note slot="end">
+        <ion-chip *ngIf="request.state == 'sended'" color="tertiary">Enviada</ion-chip>
         <ion-chip *ngIf="request.state == 'inprogress'" color="primary">En proceso</ion-chip>
         <ion-chip *ngIf="request.state == 'approved'" color="success">Aprobada</ion-chip>
         <ion-chip *ngIf="request.state == 'rejected'" color="danger">Rechazada</ion-chip>

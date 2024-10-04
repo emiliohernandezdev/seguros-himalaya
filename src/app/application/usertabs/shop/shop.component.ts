@@ -35,44 +35,31 @@ export class ShopComponent  implements OnInit {
 
   public async requestBudget(product: any){
     this.router.navigate(['/application/quotation', product.uuid]);
-    // const alert = await this.alertCtrl.create({
-    //   header: 'Solicitar cotizacion',
-    //   subHeader: product.name + ' de ' + product.provider.name,
-    //   inputs: [
-    //     {
-    //       type: 'text',
-    //       label: 'Nombre',
-    //       placeholder: 'Nombre de cliente',
-    //       name: 'name'
-    //     },
-    //     {
-    //       type: 'date',
-    //       label: 'Fecha de nacimiento',
-    //       placeholder: 'Fecha nacimiento cliente',
-    //       name: 'birthDate'
-    //     },
-    //     {
-    //       type: 'email',
-    //       label: 'Correo electronico',
-    //       placeholder: 'Correo electronico cliente',
-    //       name: 'email'
-    //     }
-    //   ],
-    //   buttons: [
-    //     {
-    //       text: 'Cancelar',
-    //       role: 'destructive',
-    //     },
-    //     {
-    //       text: 'Solicitar',
-    //       handler: (data) => {
-    //         console.log(data);
-    //       },
-    //     }
-    //   ]
-    // })
+  }
 
-    // await alert.present()
+  async handleInput(event: any) {
+    event.preventDefault();
+    const query = event.target.value.toLowerCase();
+    
+    const loading = await this.loadingCtrl.create({
+      message: 'Buscando...'
+    });
+  
+    await loading.present();
+
+    this.products = this.products.filter((product) => {
+      return (
+        product.name.toLowerCase().includes(query) ||
+        product.description.toLowerCase().includes(query)
+      );
+    });
+  
+    await loading.dismiss();
+  }
+
+  async cancel(){
+    this.products = []
+    this.getProducts()
   }
 
 }
