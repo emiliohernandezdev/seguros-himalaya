@@ -77,7 +77,7 @@ export class LoginComponent  implements OnInit {
             break;
 
             case 'user':
-              this.router.navigate(['/application/user/menu'])
+              this.router.navigate(['/application/user/menu/tab1'])
             break;
           }
           await toast.present()
@@ -163,7 +163,7 @@ export class LoginComponent  implements OnInit {
         }else{
           authAlert.header = 'Error de autenticacion';
           authAlert.subHeader = 'Verifique sus credenciales'
-          authAlert.message = 'Y vuelva a intentarlo mas tarde.'
+          authAlert.message = e.message ?? 'Vuelva a intentarlo mas tarde'
           
           await authAlert.present();
         }
@@ -171,7 +171,6 @@ export class LoginComponent  implements OnInit {
       await loading.dismiss();
     })
     .catch(async (error) => {
-      console.log(error)
       await loading.dismiss();
       const alert = await this.alertController.create({
         header: 'Ocurrio un error',

@@ -1,0 +1,53 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Crear post
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Crear post</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <form [formGroup]="postForm">
+    <ion-list>
+      <ion-item>
+        <ion-input formControlName="title" label="Titulo" placeholder="Un titulo llamativo"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-textarea formControlName="description" label="Descripcion" placeholder="Una descripcion llamativa"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-textarea formControlName="link" label="Link/enlace" placeholder="Ej: https://instagram.com/, https://tiktok.com/"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Fecha de inicio</ion-label>
+        <ion-datetime formControlName="startDate" presentation="day-month-year" locale="es-ES"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Fecha de fin</ion-label>
+        <ion-datetime formControlName="endDate" presentation="day-month-year" locale="es-ES"></ion-datetime>
+      </ion-item>
+    
+
+    </ion-list>
+    <br/>
+    <ion-button expand="block" [disabled]="!postForm.valid" (click)="savePost()">
+      <ion-icon slot="start" name="push"></ion-icon>
+      Publicar
+    </ion-button>
+  </form>
+  
+
+</ion-content>

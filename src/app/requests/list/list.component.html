@@ -8,3 +8,81 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- <ion-refresher slot="fixed" >
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Hale hacia abajo para actualizar"
+      refreshingSpinner="circles"
+      refreshingText="Cargando..."
+      
+    >
+    </ion-refresher-content>
+  </ion-refresher> -->
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Solicitudes</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-searchbar animated="true" placeholder="Buscar solicitudes"></ion-searchbar>
+
+  <ion-card *ngIf="requests && requests.length < 1">
+    <ion-card-header>
+      <ion-card-title>Sin resultados</ion-card-title>
+      <ion-card-subtitle>Consulta sin datos</ion-card-subtitle>
+    </ion-card-header>
+  
+    <ion-card-content>
+      Here's a small text description for the card content. Nothing more, nothing less.
+    </ion-card-content>
+  </ion-card>
+
+  <!-- <ion-list>
+    <ion-item-sliding *ngFor="let provider of providers">
+      <ion-item-options side="start">
+        <ion-item-option color="tertiary" [href]="provider.url" target="_blank">
+          <ion-icon slot="top" name="globe"></ion-icon>
+          Visitar web
+        </ion-item-option>
+      </ion-item-options>
+      <ion-item detail="true">
+        <ion-thumbnail slot="start">
+          <img [src]="provider.logo" />
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{provider.name}}</h2>
+          <p>{{provider.description}}</p>
+        </ion-label>
+        <!-- <ion-note slot="end">
+          <ion-chip *ngIf="client.type == 'individual'" color="primary">Individual</ion-chip>
+          <ion-chip *ngIf="client.type == 'business'" color="medium">Empresa</ion-chip>
+          <ion-chip *ngIf="client.type == 'other'" color="tertiary">Otro</ion-chip>
+        </ion-note> 
+      </ion-item>
+  
+      <ion-item-options side="end">
+        <ion-item-option>
+          <ion-icon slot="top" name="pencil"></ion-icon>
+          Editar
+        </ion-item-option>
+        <ion-item-option color="danger">
+          <ion-icon slot="top" name="trash"></ion-icon>
+          Eliminar
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list> -->
+  
+
+
+
+  <!-- <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="addForm()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab> -->
+
+
+</ion-content>

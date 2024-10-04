@@ -41,7 +41,7 @@ export class UpdateComponent  implements OnInit, ViewWillLeave {
   ngOnInit() {}
 
   ionViewWillLeave(){
-    alert("Se perderan los cambios")
+    // alert("Se perderan los cambios")
   }
 
   readonly phoneMask: MaskitoOptions = {
@@ -85,12 +85,15 @@ export class UpdateComponent  implements OnInit, ViewWillLeave {
         await loading.dismiss()
         toast.message = e.message ?? 'Cliente actualizado';
         toast.icon = 'checkmark-circle-outline';
+        toast.color = 'success';
         await toast.present()
         this.nav.pop()
+        this.clientService.emitClientUpdated(e.data);
       }else{
         await loading.dismiss()
         toast.message = e.message ?? 'Error al actualizar el cliente';
         toast.icon = 'alert-circle-outline';
+        toast.color = 'danger';
         await toast.present()
       }
     })

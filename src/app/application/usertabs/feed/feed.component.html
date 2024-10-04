@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Inicio
+      Feed
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -10,7 +10,7 @@
 
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Inicio</ion-title>
+      <ion-title size="large">Feed</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -19,7 +19,7 @@
       pullingIcon="chevron-down-circle-outline"
       pullingText="Pull to refresh"
       refreshingSpinner="circles"
-      refreshingText="Refreshing..."
+      refreshingText="Actualizando..."
     >
     </ion-refresher-content>
   </ion-refresher>
@@ -28,14 +28,30 @@
     <img alt="Himalaya" src="https://elchesemueve.com/images/blog/historia/Himalaya-Clima-Flora-Fauna-Fisiografia.jpg" />
     <ion-card-header>
       <ion-card-title>Bienvenido cliente!</ion-card-title>
-      <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+      <ion-card-subtitle>Seguros Himalaya</ion-card-subtitle>
     </ion-card-header>
-  
-    <ion-card-content>
-      Here's a small text description for the card content. Nothing more, nothing less.
-    </ion-card-content>
   </ion-card>
 
+  <div *ngIf="posts && posts.length > 0">
+    <ion-card *ngFor="let post of posts">
+      <ion-card-header>
+        <ion-card-title>{{ post.title }}</ion-card-title>
+        <ion-card-subtitle>{{ post.description }}</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-button expand="block" color="primary" (click)="openLink(post.link)">Ver publicación</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div *ngIf="posts.length < 1">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Sin publicaciones recientes</ion-card-title>
+      </ion-card-header>
+    </ion-card>
+  </div>
  
 
 

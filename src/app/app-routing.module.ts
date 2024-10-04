@@ -68,6 +68,12 @@ const routes: Routes = [
     loadChildren: () => import('./requests/requests.module').then(m => m.RequestsModule),
     canActivate: [AuthGuard],
     data: { authGuardPipe:redirectUnauthorizedToLogin }
+  },
+  {
+    path: 'posts',
+    loadChildren: () => import('./posts/posts.module').then(m => m.PostsModule),
+    canActivate: [AuthGuard],
+    data: { authGuardPipe:redirectUnauthorizedToLogin }
   }
 ];
 

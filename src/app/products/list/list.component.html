@@ -32,36 +32,74 @@
 
   <ion-searchbar animated="true" placeholder="Buscar productos"></ion-searchbar>
 
-  <ion-list>
-    <ion-item-sliding *ngFor="let product of products">
-  
-      <ion-item detail="true" [routerLink]="['/products/detail', product.uuid]">
-        <ion-label>
-          <h2>{{product.name}}</h2>
-          <p>{{product.description | slice:0:50}}</p>
-          <p>Rango de precio: Q {{product.price}}</p>
-          <p>Proveedor: {{product.provider.name}}</p>
-        </ion-label>
+  <ion-item-group>
+    <ion-item-divider>
+      <ion-label>Filtros</ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-select (ionChange)="filterProducts('category', $event)" interface="action-sheet" label="Categoria" placeholder="Seleccione categoria..." [cancelText]="'Cancelar'" [okText]="'Aceptar'">
+        <ion-select-option value="">Todas</ion-select-option>
+        <ion-select-option *ngFor="let category of categories" [value]="category.uuid">{{category.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
 
-        <ion-note slot="end">
-          <ion-chip [style]="{'--background': product.category.color}">{{product.category.name}}</ion-chip>
-        </ion-note>
-      </ion-item>
+    <ion-item>
+      <ion-select (ionChange)="filterProducts('provider', $event)" interface="action-sheet" label="Proveedor" placeholder="Seleccione proveedor..." [cancelText]="'Cancelar'" [okText]="'Aceptar'">
+        <ion-select-option value="">Todos</ion-select-option>
+        <ion-select-option *ngFor="let provider of providers" [value]="provider.uuid">{{provider.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Rango de precio</ion-label>
+      <ion-range (ionChange)="filterProducts('price', $event)" [min]="minPrice" [max]="maxPrice" step="1" snaps="true" ticks="true" pin="true" [dualKnobs]="true">
+        <ion-icon slot="start" name="cash-outline"></ion-icon>
+        <ion-icon slot="end" name="cash-outline"></ion-icon>
+        <ion-label slot="start">0</ion-label>
+        <ion-label slot="end">100</ion-label>
+      </ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-button size="small" (click)="getProducts()">
+        <ion-icon slot="start" name="refresh"></ion-icon>
+        Reestablecer filtros
+      </ion-button>
+    </ion-item>
+
+    <ion-item-divider>
+      <ion-label>Productos</ion-label>
+    </ion-item-divider>
+
+    <ion-list>
+      <ion-item-sliding *ngFor="let product of products">
+    
+        <ion-item detail="true" [routerLink]="['/products/detail', product.uuid]">
+          <ion-label>
+            <h2>{{product.name}}</h2>
+            <p>{{product.description | slice:0:50}}</p>
+            <p>Rango de precio: Q {{product.price}}</p>
+            <p>Proveedor: {{product.provider.name}}</p>
+          </ion-label>
   
-      <!-- <ion-item-options side="end">
-        <ion-item-option>
-          <ion-icon slot="top" name="pencil"></ion-icon>
-          Editar
-        </ion-item-option>
-        <ion-item-option color="danger" (click)="delete(category)">
-          <ion-icon slot="top" name="trash"></ion-icon>
-          Eliminar
-        </ion-item-option>
-      </ion-item-options> -->
-    </ion-item-sliding>
-  </ion-list>
-  
-  
+          <ion-note slot="end">
+            <ion-chip [style]="{'--background': product.category.color}">{{product.category.name}}</ion-chip>
+          </ion-note>
+        </ion-item>
+    
+        <!-- <ion-item-options side="end">
+          <ion-item-option>
+            <ion-icon slot="top" name="pencil"></ion-icon>
+            Editar
+          </ion-item-option>
+          <ion-item-option color="danger" (click)="delete(category)">
+            <ion-icon slot="top" name="trash"></ion-icon>
+            Eliminar
+          </ion-item-option>
+        </ion-item-options> -->
+      </ion-item-sliding>
+    </ion-list>
+  </ion-item-group>
 
 
 

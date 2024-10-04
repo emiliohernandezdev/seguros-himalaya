@@ -2,11 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
+import { io, Socket } from 'socket.io-client';
 
 @Injectable()
 export class ClientService {
 
-  constructor(private http: HttpClient) { }
+  private socket: Socket;
+  constructor(private http: HttpClient) { 
+    this.socket = io(`${environment.socket}clients`);
+  }
 
   private extractData(res: any){
     let body = res;
@@ -38,6 +42,30 @@ export class ClientService {
   public getClientInfo(uuid: string): Observable<any> {
     return this.http.get(`${environment.apiUrl}client/${uuid}`)
     .pipe(map(this.extractData));
+  }
+
+  emitClientAdded(data: any) {
+    this.socket.emit('clientAdded', data);
+  }
+
+  onClientAdded(callback: (data: any) => void) {
+    this.socket.on('clientAddedData', callback);
+  }
+
+  emitClientDeleted(data: any) {
+    this.socket.emit('clientDeleted', data);
+  }
+
+  onClientDeleted(callback: (data: any) => void) {
+    this.socket.on('clientDeletedData', callback);
+  }
+
+  emitClientUpdated(data: any) {
+    this.socket.emit('clientUpdated', data);
+  }
+
+  onClientUpdated(callback: (data: any) => void) {
+    this.socket.on('clientUpdatedData', callback);
   }
 
 }

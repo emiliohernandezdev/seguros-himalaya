@@ -19,8 +19,27 @@ export class ListComponent  implements OnInit {
 
   ngOnInit() {
     this.getClients()
+    this.clientSocket()
   }
 
+
+  async clientSocket(){
+    this.clientService.onClientAdded((data: any) => {
+      this.clients.push(data);
+    })
+
+    this.clientService.onClientDeleted((data: any) => {
+      this.clients = this.clients.filter((client: any) => client.uuid != data.uuid)
+    })
+
+    this.clientService.onClientUpdated((data: any) => {
+      var index = this.clients.findIndex((client: any) => client.uuid == data.uuid);
+
+      if(index > -1){
+        this.clients[index] = data;
+      }
+    })
+  }
 
   async getClients(){
     this.clients = []
@@ -101,7 +120,7 @@ export class ListComponent  implements OnInit {
   public async delete(client: any) {
 
     const actionSheet = await this.actionSheetCtrl.create({
-      header: 'Desea eliminar al cliente?',
+      header: 'Desea eliminar al cliente: ' + client.name + ' ' + client.surname + '?',
       buttons: [
         {
           text: 'Si, eliminar',
@@ -125,7 +144,7 @@ export class ListComponent  implements OnInit {
               
                   await loading.dismiss()
                   await toast.present();
-                  this.clients = this.clients.filter((e) => e.uuid != client.uuid)
+                  this.clientService.emitClientDeleted(client);
                 }else{
                   const toast = await this.toastController.create({
                     message: e.message,

@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { FeedComponent } from './feed/feed.component';
 import { ShopComponent } from './shop/shop.component';
 import { RequestsComponent } from './requests/requests.component';
+import { ProductService } from 'src/app/services/product.service';
+import { PostService } from 'src/app/services/post.service';
 
 
 @NgModule({
@@ -20,6 +22,7 @@ import { RequestsComponent } from './requests/requests.component';
     IonicModule,
     CommonModule,
     UsertabsRoutingModule
-  ]
+  ],
+  providers: [ProductService, PostService]
 })
 export class UsertabsModule { }

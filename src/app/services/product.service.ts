@@ -27,4 +27,10 @@ export class ProductService {
     return this.http.post(`${environment.apiUrl}product/add`, form)
     .pipe(map(this.extractData));
   }
+
+  public getProductsPriceFilter(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}product/pricesFilter`)
+    .pipe(map(this.extractData));
+  }
+
 }

@@ -15,6 +15,8 @@ import { environment } from 'src/environments/environment.prod';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpReqInterceptor } from './interceptors/HttpReq.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
@@ -23,12 +25,16 @@ export const appConfig: ApplicationConfig = {
   ]
 };
 
+const config: SocketIoConfig = { url: environment.socket, options: {} };
+
+
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot({
     mode: 'ios',
     backButtonText: 'Atrás'
-  }), AppRoutingModule, AuthModule, BrowserAnimationsModule],
+  }), AppRoutingModule, AuthModule, BrowserAnimationsModule,
+  SocketIoModule.forRoot(config),],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AuthService,
     {

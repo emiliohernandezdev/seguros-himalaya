@@ -32,9 +32,9 @@
     <ion-item-sliding *ngFor="let client of clients">
   
       <ion-item detail="true">
-        <ion-avatar aria-hidden="true" slot="start">
+        <ion-thumbnail aria-hidden="true" slot="start">
           <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-        </ion-avatar>
+        </ion-thumbnail>
         <ion-label>
           <h2>{{client.name}} {{client.surname}}</h2>
           <p>{{client.email}}</p>

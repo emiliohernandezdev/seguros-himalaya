@@ -43,11 +43,11 @@
       </ion-item>
   
       <ion-item-options>
-        <ion-item-option>
+        <ion-item-option (click)="changeRol(user)">
           <ion-icon slot="end" name="id-card-outline"></ion-icon>
           Cambiar rol
         </ion-item-option>
-        <ion-item-option color="danger">
+        <ion-item-option color="danger" (click)="disableUser(user)">
           <ion-icon slot="end" name="person-remove-outline"></ion-icon>
           Desactivar
         </ion-item-option>

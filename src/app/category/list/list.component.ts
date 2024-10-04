@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { CategoryService } from 'src/app/services/category.service';
 import { AddComponent } from '../add/add.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-category',
@@ -13,7 +14,8 @@ export class ListComponent implements OnInit {
   constructor(private categoryService: CategoryService, private modalCtrl: ModalController,
     private loadingCtrl: LoadingController,
     private actionSheetCtrl: ActionSheetController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -78,6 +80,10 @@ export class ListComponent implements OnInit {
     await loading.dismiss();
   }
 
+  public async update(category: any){
+    this.router.navigate(['/category/update', category.uuid]);
+  }
+
   public async delete(category: any) {
 
     const actionSheet = await this.actionSheetCtrl.create({
@@ -98,9 +104,10 @@ export class ListComponent implements OnInit {
               .subscribe(async(e) => {
                 if (e.success == true) {
                   const toast = await this.toastController.create({
-                    message: e.message,
+                    message: e.message ?? 'Categoría eliminada',
                     duration: 2300,
                     position: 'bottom',
+                    color: 'success'
                   });
               
                   await loading.dismiss()
@@ -108,9 +115,10 @@ export class ListComponent implements OnInit {
                   this.categories = this.categories.filter((e) => e.uuid != category.uuid)
                 }else{
                   const toast = await this.toastController.create({
-                    message: e.message,
+                    message: e.message ?? 'Error al eliminar la categoría',
                     duration: 2300,
                     position: 'bottom',
+                    color: 'danger'
                   });
                   await loading.dismiss()
                   await toast.present();

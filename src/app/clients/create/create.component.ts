@@ -72,6 +72,8 @@ export class CreateComponent  implements OnInit {
         });
         await loading.dismiss();
         await toast.present();
+
+        this.clientService.emitClientAdded(e.data);
         
       }else{
         await loading.dismiss();
