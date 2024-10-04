@@ -1,4 +1,4 @@
-import { ApplicationConfig, NgModule } from '@angular/core';
+import { ApplicationConfig, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -12,10 +12,12 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { AuthService } from './services/auth.service';
 import { AuthModule } from './auth/auth.module';
 import { environment } from 'src/environments/environment.prod';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpReqInterceptor } from './interceptors/HttpReq.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import localeEsGt from '@angular/common/locales/es-GT';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(localeEsGt, 'es-Gt');
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -37,11 +39,12 @@ const config: SocketIoConfig = { url: environment.socket, options: {} };
   SocketIoModule.forRoot(config),],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AuthService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpReqInterceptor,
-      multi: true
-    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: AuthInterceptor,
+    //   multi: true
+    // },
+    { provide: LOCALE_ID, useValue: "es-Gt" }
   ],
   bootstrap: [AppComponent],
 })

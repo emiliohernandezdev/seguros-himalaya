@@ -5,6 +5,8 @@ import { ApplicationRoutingModule } from './application-routing.module';
 import { IonicModule } from '@ionic/angular';
 import { QuotationComponent } from './usertabs/quotation/quotation.component';
 import { ProductService } from '../services/product.service';
+import { RequestService } from '../services/request.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -14,8 +16,9 @@ import { ProductService } from '../services/product.service';
   imports: [
     IonicModule,
     CommonModule,
-    ApplicationRoutingModule
+    ApplicationRoutingModule,
+    ReactiveFormsModule
   ],
-  providers: [ProductService]
+  providers: [ProductService, RequestService]
 })
 export class ApplicationModule { }

@@ -1,3 +1,60 @@
-<p>
-  requests works!
-</p>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Mis solicitudes
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Mis solicitudes</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-refresher slot="fixed">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Hale hacia abajo para actualizar"
+      refreshingSpinner="circles" refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+
+  <ion-list *ngIf="requests && requests.length > 0">
+    <ion-list-header>
+      <ion-label>Solicitudes/cotizaciones</ion-label>
+      <ion-button (click)="getMyRequests()">Recargar</ion-button>
+    </ion-list-header>
+    <ion-item *ngFor="let request of requests" detail="true">
+      <ion-icon name="book" slot="start"></ion-icon>
+      <ion-label>{{request.name}}
+        <p class="ion-text-nowrap"><b>Descripción:</b> {{request.description}}</p>
+        <p class="ion-text-nowrap"><b>Fecha creación:</b> {{request.createdAt | date : "dd-MM-YYYY hh:mm"}}</p>
+        <p class="ion-text-nowrap"><b>Ult. actualización:</b> {{request.updatedAt | date : "dd-MM-YYYY hh:mm"}}</p>
+      </ion-label>
+      <ion-note slot="end">
+        <ion-chip *ngIf="request.state == 'inprogress'" color="primary">En proceso</ion-chip>
+        <ion-chip *ngIf="request.state == 'approved'" color="success">Aprobada</ion-chip>
+        <ion-chip *ngIf="request.state == 'rejected'" color="danger">Rechazada</ion-chip>
+      </ion-note>
+    </ion-item>
+  </ion-list>
+
+  <ion-card *ngIf="!requests || requests.length < 1">
+    <ion-card-header>
+      <ion-card-title>No hay solicitudes</ion-card-title>
+      <ion-card-subtitle>Sin resultados</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      Usted no cuenta con solicitudes registradas a su nombre.
+      <ion-button size="small" routerLink="/application/user/menu/tab2">
+        <ion-icon slot="start" name="cart"></ion-icon>
+        Visite nuestros productos para enviar una solicitud
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+
+</ion-content>

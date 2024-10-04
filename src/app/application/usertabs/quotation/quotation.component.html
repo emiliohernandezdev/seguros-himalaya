@@ -48,95 +48,123 @@
             <ion-label>Datos de cliente</ion-label>
           </ion-item-divider>
 
-          <form *ngIf="formType == 'personal'">
-            <ion-item>
-              <ion-icon slot="start" name="person-outline"></ion-icon>
-              <ion-input label="Nombre(s)" placeholder="Ejemplo Prueba"></ion-input>
-            </ion-item>
-  
-            <ion-item>
-              <ion-icon slot="start" name="person-outline"></ion-icon>
-              <ion-input label="Apellido(s)" placeholder="Buenejemplo Garcia"></ion-input>
-            </ion-item>
-  
-            <ion-item>
-              <ion-icon slot="start" name="calendar-outline"></ion-icon>
-              <ion-label>Fecha de nacimiento</ion-label>
-              <ion-datetime label="Fecha de nacimiento" presentation="day-month-year" locale="es-ES"></ion-datetime>
-            </ion-item>
-          </form>
+          <ng-container [ngSwitch]="formType">
 
-          <form *ngIf="formType == 'house'">
-            <ion-item>
-              <ion-icon slot="start" name="person-outline"></ion-icon>
-              <ion-input label="Nombre(s)" placeholder="Ejemplo Prueba"></ion-input>
-            </ion-item>
-  
-            <ion-item>
-              <ion-icon slot="start" name="person-outline"></ion-icon>
-              <ion-input label="Apellido(s)" placeholder="Buenejemplo Garcia"></ion-input>
-            </ion-item>
-  
-            <ion-item>
-              <ion-icon slot="start" name="home-outline"></ion-icon>
-              <ion-textarea label="Direccion casa" placeholder="Ej: Calle 123"></ion-textarea>
-            </ion-item>
+            <div *ngSwitchCase="'client'">
+              <form [formGroup]="clientForm">
+                <ion-item>
+                  <ion-icon slot="start" name="person-outline"></ion-icon>
+                  <ion-input formControlName="name" label="Nombre(s)" placeholder="Ejemplo Prueba"></ion-input>
+                </ion-item>
+      
+                <ion-item>
+                  <ion-icon slot="start" name="person-outline"></ion-icon>
+                  <ion-input formControlName="surname" label="Apellido(s)" placeholder="Buenejemplo Garcia"></ion-input>
+                </ion-item>
+      
+                <ion-item>
+                  <ion-icon slot="start" name="calendar-outline"></ion-icon>
+                  <ion-label>Fecha de nacimiento</ion-label>
+                  <ion-datetime formControlName="bornDate" label="Fecha de nacimiento" presentation="day-month-year" locale="es-ES"></ion-datetime>
+                </ion-item>
 
-            <ion-item>
-              <ion-icon slot="start" name="cash-outline"></ion-icon>
-              <ion-input type="number" label="Valor de la casa" placeholder="Ej: Q 1,200,000.00"></ion-input>
-            </ion-item>
-          </form>
+                <ion-item>
+                  <ion-icon slot="start" name="happy-outline"></ion-icon>
+                  <ion-textarea formControlName="comments" label="Comentarios adicionales" placeholder="Ej: el carro es nuevo"></ion-textarea>
+                </ion-item>
 
-          <form *ngIf="formType == 'car'">
-            <ion-item>
-              <ion-icon slot="start" name="person-outline"></ion-icon>
-              <ion-input label="Nombre(s)" placeholder="Ejemplo Prueba"></ion-input>
-            </ion-item>
-  
-            <ion-item>
-              <ion-icon slot="start" name="person-outline"></ion-icon>
-              <ion-input label="Apellido(s)" placeholder="Buenejemplo Garcia"></ion-input>
-            </ion-item>
+                <ion-button fill="outline" [disabled]="!clientForm.valid" expand="full" (click)="sendClientQuotation()">
+                  <ion-icon slot="start" name="send"></ion-icon>
+                  Enviar solicitud
+                </ion-button>
+              </form>
+            </div>
 
-            <ion-item>
-              <ion-icon slot="start" name="car-outline"></ion-icon>
-              <ion-input type="text" label="Marca de carro" placeholder="Ej: Toyota"></ion-input>
-            </ion-item>
+            <div *ngSwitchCase="'house'">
+              <form [formGroup]="houseForm">
+                <ion-item>
+                  <ion-icon slot="start" name="person-outline"></ion-icon>
+                  <ion-input formControlName="name" label="Nombre(s)" placeholder="Ejemplo Prueba"></ion-input>
+                </ion-item>
+      
+                <ion-item>
+                  <ion-icon slot="start" name="person-outline"></ion-icon>
+                  <ion-input formControlName="surname" label="Apellido(s)" placeholder="Buenejemplo Garcia"></ion-input>
+                </ion-item>
+      
+                <ion-item>
+                  <ion-icon slot="start" name="home-outline"></ion-icon>
+                  <ion-textarea formControlName="address" label="Direccion casa" placeholder="Ej: Calle 123"></ion-textarea>
+                </ion-item>
+    
+                <ion-item>
+                  <ion-icon slot="start" name="cash-outline"></ion-icon>
+                  <ion-input formControlName="price" type="number" label="Valor de la casa" placeholder="Ej: Q 1,200,000.00"></ion-input>
+                </ion-item>
 
-            <ion-item>
-              <ion-icon slot="start" name="car-outline"></ion-icon>
-              <ion-input type="text" label="Modelo de carro" placeholder="Ej: Corolla"></ion-input>
-            </ion-item>
+                <ion-item>
+                  <ion-icon slot="start" name="happy-outline"></ion-icon>
+                  <ion-textarea formControlName="comments" label="Comentarios adicionales" placeholder="Ej: el carro es nuevo"></ion-textarea>
+                </ion-item>
+              </form>
+            </div>
 
-            <ion-item>
-              <ion-icon slot="start" name="car-outline"></ion-icon>
-              <ion-input type="number" label="Año de fabricación de carro" placeholder="Ej: 2010"></ion-input>
-            </ion-item>
+            <div *ngSwitchCase="'car'">
+              <form [formGroup]="carForm">
+                <ion-item>
+                  <ion-icon slot="start" name="person-outline"></ion-icon>
+                  <ion-input formControlName="name" label="Nombre(s)" placeholder="Ejemplo Prueba"></ion-input>
+                </ion-item>
+      
+                <ion-item>
+                  <ion-icon slot="start" name="person-outline"></ion-icon>
+                  <ion-input formControlName="surname" label="Apellido(s)" placeholder="Buenejemplo Garcia"></ion-input>
+                </ion-item>
+    
+                <ion-item>
+                  <ion-icon slot="start" name="car-outline"></ion-icon>
+                  <ion-input formControlName="brand" type="text" label="Marca de carro" placeholder="Ej: Toyota"></ion-input>
+                </ion-item>
+    
+                <ion-item>
+                  <ion-icon slot="start" name="car-outline"></ion-icon>
+                  <ion-input formControlName="model" type="text" label="Modelo de carro" placeholder="Ej: Corolla"></ion-input>
+                </ion-item>
+    
+                <ion-item>
+                  <ion-icon slot="start" name="car-outline"></ion-icon>
+                  <ion-input formControlName="year" type="number" label="Año de fabricación de carro" placeholder="Ej: 2010"></ion-input>
+                </ion-item>
+    
+                <ion-item>
+                  <ion-icon slot="start" name="car-sport-outline"></ion-icon>
+                  <ion-input formControlName="plate" type="text" label="Placa del carro" placeholder="Ej: P-123ABC"></ion-input>
+                </ion-item>
+    
+                <ion-item>
+                  <ion-icon slot="start" name="cash-outline"></ion-icon>
+                  <ion-input formControlName="price" type="number" label="Valor estimado del carro" placeholder="Ej: Q 45,000.00"></ion-input>
+                </ion-item>
+    
+                <ion-item>
+                  <ion-icon slot="start" name="happy-outline"></ion-icon>
+                  <ion-textarea formControlName="comments" label="Comentarios adicionales" placeholder="Ej: el carro es nuevo"></ion-textarea>
+                </ion-item>
+                <br/>
+                <ion-text color="danger">Nota: las polizas de autos deben ser aprobadas con una inspeccion al mismo (presencial)</ion-text>
+              </form>
+            </div>
 
-            <ion-item>
-              <ion-icon slot="start" name="car-sport-outline"></ion-icon>
-              <ion-input type="text" label="Placa del carro" placeholder="Ej: P-123ABC"></ion-input>
-            </ion-item>
+            <div *ngSwitchDefault>
+              <p>Seleccione una opción válida para mostrar un formulario.</p>
+            </div>
+          </ng-container>
 
-            <ion-item>
-              <ion-icon slot="start" name="cash-outline"></ion-icon>
-              <ion-input type="number" label="Valor estimado del carro" placeholder="Ej: Q 45,000.00"></ion-input>
-            </ion-item>
+          
 
-            <ion-item>
-              <ion-icon slot="start" name="happy-outline"></ion-icon>
-              <ion-textarea label="Comentarios adicionales" placeholder="Ej: el carro es nuevo"></ion-textarea>
-            </ion-item>
-            <br/>
-            <ion-text color="danger">Nota: las polizas de autos deben ser aprobadas con una inspeccion al mismo (presencial)</ion-text>
-            <br/>
-            <br/>
-            <ion-button expand="block">
-              <ion-icon slot="start" name="send-outline"></ion-icon>
-              Enviar solicitud
-            </ion-button>
-          </form>
+          
+
+          
 
         </ion-item-group>
       </ion-list>

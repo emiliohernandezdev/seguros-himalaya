@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
+import { RequestService } from 'src/app/services/request.service';
 
 @Component({
   selector: 'app-requests',
@@ -7,8 +9,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RequestsComponent  implements OnInit {
 
-  constructor() { }
+  public requests: any[] = [];
+  constructor(private requestService: RequestService, private loadingCtrl: LoadingController) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getMyRequests()
+  }
+
+  async getMyRequests() {
+    this.requests = [];
+    const loading = await this.loadingCtrl.create({
+      message: 'Cargando solicitudes...',
+    });
+
+    loading.present();
+
+    this.requestService.getMyRequests()
+    .subscribe(async (e) => {
+      if(e.success == true) {
+        await loading.dismiss()
+        this.requests = e.requests;
+      }else{
+        await loading.dismiss()
+      }
+    })
+  }
 
 }

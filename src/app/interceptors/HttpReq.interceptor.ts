@@ -1,57 +1,45 @@
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { AlertController, LoadingController } from "@ionic/angular";
-import { catchError, finalize, Observable, throwError, from } from "rxjs";
-import { switchMap } from "rxjs/operators";
+import { Injectable } from '@angular/core';
+import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, finalize } from 'rxjs/operators';
+import { AuthService } from '../services/auth.service'; // Servicio donde tienes la lógica de autenticación
+import { Router } from '@angular/router';
 
 @Injectable()
-export class HttpReqInterceptor implements HttpInterceptor {
+export class AuthInterceptor implements HttpInterceptor {
 
-  private loadingElement: HTMLIonLoadingElement | null = null;
+  constructor(private authService: AuthService, private router: Router) {}
 
-  constructor(private loadingCtrl: LoadingController, private alertCtrl: AlertController) {}
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.log('interceptor invocado')
+    // Obtén el token JWT desde tu servicio de autenticación
+    const token = localStorage.getItem('himalayaToken')?.toString()
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Usamos from() para convertir la promesa del loading en un Observable
-    return from(this.showLoading()).pipe(
-      switchMap(() => next.handle(request).pipe(
-        finalize(() => {
-          this.hideLoading();
-        }),
-        catchError((error: HttpErrorResponse) => {
-          this.showErrorAlert(error);
-          return throwError(() => error);
-        })
-      ))
-    );
-  }
-
-  // Función para mostrar el loader
-  private async showLoading() {
-    if (!this.loadingElement) {
-      this.loadingElement = await this.loadingCtrl.create({
-        message: 'Por favor espera...',
-        spinner: 'crescent',
+    // Clona la solicitud para añadirle el encabezado Authorization si el token existe
+    let authReq = req;
+    if (token) {
+      authReq = req.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`
+        }
       });
-      await this.loadingElement.present();
     }
-  }
 
-  // Función para ocultar el loader
-  private hideLoading() {
-    if (this.loadingElement) {
-      this.loadingElement.dismiss();
-      this.loadingElement = null;
-    }
-  }
-
-  // Función para mostrar una alerta de error
-  private async showErrorAlert(error: HttpErrorResponse) {
-    const alert = await this.alertCtrl.create({
-      header: 'Error',
-      message: `Error: ${error.message}`,
-      buttons: ['OK']
-    });
-    await alert.present();
+    return next.handle(authReq).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          this.router.navigate(['/login']);
+        } else if(error.status == 200){
+          console.log('pasa')
+        }
+        else if (error.status === 403) {
+          console.error('Acceso denegado');
+        }
+        return throwError(() => error);
+      }),
+      finalize(() => {
+        console.log('Solicitud finalizada');
+      })
+    );
   }
 }
