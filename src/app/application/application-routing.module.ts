@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { QuotationComponent } from './usertabs/quotation/quotation.component';
+import { RequestdetailComponent } from './usertabs/requestdetail/requestdetail.component';
 
 const routes: Routes = [
   {
@@ -10,6 +11,10 @@ const routes: Routes = [
   {
     path: 'quotation/:product',
     component: QuotationComponent
+  },
+  {
+    path: 'requests/detail/:id',
+    component: RequestdetailComponent
   }
 ];
 

@@ -5,11 +5,13 @@ import { RequestsRoutingModule } from './requests-routing.module';
 import { IonicModule } from '@ionic/angular';
 import { ListComponent } from './list/list.component';
 import { RequestService } from '../services/request.service';
+import { DetailComponent } from './detail/detail.component';
 
 
 @NgModule({
   declarations: [
-    ListComponent
+    ListComponent,
+    DetailComponent
   ],
   imports: [
     IonicModule,

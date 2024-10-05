@@ -7,11 +7,13 @@ import { QuotationComponent } from './usertabs/quotation/quotation.component';
 import { ProductService } from '../services/product.service';
 import { RequestService } from '../services/request.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RequestdetailComponent } from './usertabs/requestdetail/requestdetail.component';
 
 
 @NgModule({
   declarations: [
-    QuotationComponent
+    QuotationComponent,
+    RequestdetailComponent
   ],
   imports: [
     IonicModule,

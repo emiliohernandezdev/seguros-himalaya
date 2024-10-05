@@ -18,6 +18,11 @@ export class RequestService {
     .pipe(map(this.extractData));
   }
 
+  public getRequestById(uuid: string): Observable<any> {
+    return this.http.get(`${environment.apiUrl}request/${uuid}`)
+    .pipe(map(this.extractData));
+  }
+
   public getMyRequests(): Observable<any> {
     const token = localStorage.getItem('himalayaToken')?.toString() ?? '';
 
@@ -44,6 +49,11 @@ export class RequestService {
       'Authorization': `Bearer ${token}`
     });
     return this.http.post(`${environment.apiUrl}request/add`, formData, { headers })	
+    .pipe(map(this.extractData));
+  }
+
+  public updateState(request: any, state: string): Observable<any>{
+    return this.http.patch(`${environment.apiUrl}request/state`, {uuidRequest: request.uuid, state: state})	
     .pipe(map(this.extractData));
   }
 }
