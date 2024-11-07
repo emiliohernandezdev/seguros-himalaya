@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ReportService } from '../services/report.service';
 
 @Component({
   selector: 'app-tab2',
@@ -34,6 +35,8 @@ export class Tab2Page {
   ];
   view = [500, 400];
 
+
+  public reportsData: any[] = [];
   // options
   showLegend: boolean = true;
   showLabels: boolean = true;
@@ -45,7 +48,37 @@ export class Tab2Page {
   dataLabelFormatterVBC(tooltipText: any) {
     return "$" + tooltipText + " trillion";
   }
-  constructor() {}
+  constructor(private reportService: ReportService) {
+    this.reportService.getReports().subscribe(res => {
+      if(res.success == true){
+        this.reportsData = [
+          {
+            "name": "Categorías",
+            "value": res.categories,
+            "extra": {
+              "code": "CAT"
+            }
+          },
+          {
+            "name": "Usuarios",
+            "value": res.users,
+            "extra": {
+              "code": "USR"
+            }
+          },
+          {
+            "name": "Productos",
+            "value": res.products,
+            "extra": {
+              "code": "PRD"
+            }
+          }
+        ]
+      }else{
+
+      }
+    })
+  }
 
 
   onSelect(event: any) {

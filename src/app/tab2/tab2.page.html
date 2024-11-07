@@ -14,8 +14,16 @@
   </ion-header>
 
 
-  <ngx-charts-pie-grid
+  <ngx-charts-bar-horizontal
+  [results]="reportsData"
+  [customColors]="colorScheme"
+  [legend]="true"
+  [legendTitle]="'Registros del sistema'">
+
+  </ngx-charts-bar-horizontal>
+
+  <!-- <ngx-charts-pie-grid
   [results]="single"
   (select)="onSelect($event)">
-</ngx-charts-pie-grid>
+</ngx-charts-pie-grid> -->
 </ion-content>

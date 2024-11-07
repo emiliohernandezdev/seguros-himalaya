@@ -6,6 +6,7 @@ import { Tab2Page } from './tab2.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { Tab2PageRoutingModule } from './tab2-routing.module';
+import { ReportService } from '../services/report.service';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { Tab2PageRoutingModule } from './tab2-routing.module';
     Tab2PageRoutingModule,
     NgxChartsModule
   ],
-  declarations: [Tab2Page]
+  declarations: [Tab2Page],
+  providers: [ReportService]
 })
 export class Tab2PageModule {}
